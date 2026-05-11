@@ -1,0 +1,119 @@
+@page
+@using final_project.Models
+@model final_project.Pages_Meals.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Meal</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Meal.MealName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Meal.MealName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Meal.TimeCategory)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Meal.TimeCategory)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Meal.PreparationTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Meal.PreparationTime)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Meal.TotalCalories)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Meal.TotalCalories)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Meal.TotalCost)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Meal.TotalCost)
+        </dd>
+
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Meal.MealIngredients)
+        </dt>
+
+
+
+        <dd class ="col-sm-10">
+            <dl class="row">
+            @foreach(var ingredient in Model.Meal.MealIngredients!){
+                <dl class="mb-4">
+                 <dt class="mb-2">
+                    @Html.DisplayFor(model => ingredient.Ingredient.IngredientName)
+                </dt> 
+            
+                <dd class="col-sm-8">
+                    @Html.DisplayNameFor(model => ingredient.Ingredient.FoodCategory):
+                    @Html.DisplayFor(model => ingredient.Ingredient.FoodCategory)
+                </dd> 
+
+                <dd class="col-sm-8">
+                    @Html.DisplayNameFor(model => ingredient.Ingredient.StorageType):
+                    @Html.DisplayFor(model => ingredient.Ingredient.StorageType)
+                </dd> 
+
+                <dd class="col-sm-8">
+                    @Html.DisplayNameFor(model => ingredient.Ingredient.ExpirationTime):
+                    @Html.DisplayFor(model => ingredient.Ingredient.ExpirationTime)
+                </dd> 
+
+                <dd class="col-sm-8">
+                    @Html.DisplayNameFor(model => ingredient.Ingredient.IngredientCalories):
+                    @Html.DisplayFor(model => ingredient.Ingredient.IngredientCalories)
+                </dd> 
+
+                <dd class="col-sm-8">
+                    @Html.DisplayNameFor(model => ingredient.Ingredient.IngredientCost):
+                    @Html.DisplayFor(model => ingredient.Ingredient.IngredientCost)
+                </dd> 
+
+                <dd class="col-sm-8">
+                    @Html.DisplayNameFor(model => ingredient.Quantity):
+                    @ingredient.Quantity
+                </dd> 
+
+                 <dd class="col-sm-8">
+                    @Html.DisplayNameFor(model => ingredient.Ingredient.UnitMeasurement):
+                    @Html.DisplayFor(model => ingredient.Ingredient.UnitMeasurement)
+                </dd> 
+
+                
+
+                </dl>           
+}
+
+</dl>
+            
+
+
+       
+    </dl>
+</div>
+
+
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Meal.MealID">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

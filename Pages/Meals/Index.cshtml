@@ -1,0 +1,148 @@
+@page
+@model final_project.Pages_Meals.IndexModel
+
+
+
+@{
+    ViewData["Title"] = "MealMate: Plan Your Plate";
+}
+
+
+
+
+
+<h1>Meal Library</h1>
+
+<p>
+    <a asp-page="Create">Create New Meal</a>
+</p>
+
+<div class="row mb-4">
+    <form class="d-flex" role="search" asp-page="./Index" method="get">
+        <div class = "col-3">
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-search"></i></span>
+                <input class="form-control me-2" type="search" name="CurrentSearch" value="@Model.CurrentSearch" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </div>
+        </div>
+    
+    </form>
+    
+    </div>
+
+   
+
+    
+
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Meal[0].MealName)
+            </th>
+            <th>
+                @{
+                    var timeSort = "time_asc";
+                    if (Model.CurrentSort == "time_asc")
+                    {
+                        timeSort = "time_desc";
+                    }
+                }
+                <a asp-page="./Index" asp-route-CurrentSort="@timeSort" asp-route-PageNum="@Model.PageNum" asp-route-CurrentSearch="@Model.CurrentSearch">@Html.DisplayNameFor(model => model.Meal[0].TimeCategory)</a>
+            </th>
+            <th>
+                @{
+                    var minutesSort = "minutes_asc";
+                    if (Model.CurrentSort == "minutes_asc"){
+                        minutesSort = "minutes_desc";
+                    }
+                }
+
+                <a asp-page="./Index" asp-route-CurrentSort="@minutesSort" asp-route-PageNum="@Model.PageNum" asp-route-CurrentSearch="@Model.CurrentSearch">@Html.DisplayNameFor(model => model.Meal[0].PreparationTime)</a>
+            </th>
+            <th>
+                 @{
+                    var caloriesSort = "calories_asc";
+                    if (Model.CurrentSort == "calories_asc"){
+                        caloriesSort = "calories_desc";
+                    }
+                }
+                <a asp-page="./Index" asp-route-CurrentSort="@caloriesSort" asp-route-PageNum="@Model.PageNum" asp-route-CurrentSearch="@Model.CurrentSearch">@Html.DisplayNameFor(model => model.Meal[0].TotalCalories)</a>
+            </th>
+            <th>
+                 @{
+                    var costSort = "cost_asc";
+                    if (Model.CurrentSort == "cost_asc"){
+                        costSort = "cost_desc";
+                    }
+                }
+                <a asp-page="./Index" asp-route-CurrentSort="@costSort" asp-route-PageNum="@Model.PageNum" asp-route-CurrentSearch="@Model.CurrentSearch">@Html.DisplayNameFor(model => model.Meal[0].TotalCost)</a>
+            </th>
+               
+            <th>
+                @Html.DisplayNameFor(model => model.Meal[0].MealIngredients)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Meal) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MealName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimeCategory)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PreparationTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalCalories)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalCost)
+            </td>
+            <td>
+                @foreach(var ingredient in item.MealIngredients!){
+
+                    @ingredient.Ingredient.IngredientName <br />
+
+
+                }
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.MealID">Edit Existing Meal</a> |
+                <a asp-page="./Details" asp-route-id="@item.MealID">View Details</a> |
+                <a asp-page="./AddDelete" asp-route-id="@item.MealID">Add/Delete Ingredient</a> |
+                <a asp-page="./Delete" asp-route-id="@item.MealID">Delete Meal</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<hr/>
+@{
+    var prevDisabled ="";
+    var nextDisabled ="";
+    if (Model.PageNum <= 1){
+        prevDisabled = "disabled";
+    }
+    if (Model.PageNum >= Model.TotalPages){
+        nextDisabled = "disabled";
+    }
+}
+
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        <li class="page-item @prevDisabled"><a class="page-link" asp-page="./Index" asp-route-PageNum="@(Model.PageNum - 1)" asp-route-CurrentSort="@Model.CurrentSort" asp-route-CurrentSearch="@Model.CurrentSearch">Previous</a></li>
+         <li class="page-item @nextDisabled"><a class="page-link" asp-page="./Index" asp-route-PageNum="@(Model.PageNum + 1)" asp-route-CurrentSort="@Model.CurrentSort" asp-route-CurrentSearch="@Model.CurrentSearch">Next</a></li>
+    </ul>
+</nav>
+
+

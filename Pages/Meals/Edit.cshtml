@@ -1,0 +1,84 @@
+@page
+@using Microsoft.EntityFrameworkCore.Metadata.Internal
+@model final_project.Pages_Meals.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Meal</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Meal.MealID" />
+            <div class="form-group">
+                <label asp-for="Meal.MealName" class="control-label"></label>
+                <input asp-for="Meal.MealName" class="form-control" />
+                <span asp-validation-for="Meal.MealName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Meal.TimeCategory" class="control-label"></label>
+                <input asp-for="Meal.TimeCategory" class="form-control" />
+                <span asp-validation-for="Meal.TimeCategory" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+<span class="text-danger">*</span>
+                <label asp-for="Meal.PreparationTime" class="control-label"></label>
+                <input asp-for="Meal.PreparationTime" class="form-control" aria-required="true"/>
+                <span asp-validation-for="Meal.PreparationTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+<span class="text-danger">*</span>
+                <label asp-for="Meal.TotalCalories" class="control-label"></label>
+                <input asp-for="Meal.TotalCalories" class="form-control" aria-required="true"/>
+                <span asp-validation-for="Meal.TotalCalories" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+<span class="text-danger">*</span>
+                <label asp-for="Meal.TotalCost" class="control-label"></label>
+                <input asp-for="Meal.TotalCost" class="form-control" aria-required="true"/>
+                <span asp-validation-for="Meal.TotalCost" class="text-danger"></span>
+            </div>
+
+           
+
+           @foreach(var ingredient in Model.Meal.MealIngredients!){
+
+            <form method="post">
+
+                <label> @Html.DisplayFor(Model => ingredient.Ingredient.IngredientName) 
+                    @Html.DisplayNameFor(model => ingredient.Quantity):
+               </label>
+
+                <input type="hidden" name="IngredientIDToUpdate" value="@ingredient.Ingredient.IngredientID"/>
+                <input type="number" name="newQuantity" step="0.01" min="0.01" max="999.99" class="form-control" />
+                <button type="submit" class="btn btn-danger btn-sm my-1" asp-page-handler="UpdateIngredient" asp-route-id="@Model.Meal.MealID">Update Quantity</button>
+
+
+
+
+            </form>
+
+
+
+
+           }
+
+                </form>     
+       
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+

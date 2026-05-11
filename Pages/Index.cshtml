@@ -1,0 +1,131 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">MealMate</h1>
+    <h2 class="display-4 mb-3">Your Recipe Collection, Organized & Planned</h2>
+</div>
+
+ @*Carousel*@
+    <h2 class="text-center">Weekly Featured Meals</h2>
+    <p class="text-center mb-3">Swipe or scroll to explore →</p>
+    <div id="mealCarousel" class="carousel slide mb-4">
+        <div class="carousel-indicators">
+             <button type="button" data-bs-target="#mealCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+             <button type="button" data-bs-target="#mealCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        </div>
+        <div class="carousel-inner mb-3">
+            <div class="carousel-item active">
+                <div class="d-flex gap-3 justify-content-center">
+                <div class="card" style="width: 18rem;">
+                <img src="img/scrambledeggs.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Scrambled Eggs with Avocado</h5>
+                    <p class="card-text">Fluffy scrambled eggs paired with creamy avocado for a simple protein-packed breakfast.</p>
+                    <a asp-page="./Meals/Details" class="btn btn-primary">View Meal Details</a>
+                </div>
+                </div>
+                <div class="card" style="width: 18rem;">
+                <img src="img/spaghetti.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Spaghetti Bolognese</h5>
+                    <p class="card-text">Classic spaghetti topped with rich slow-cooked meat sauce and parmesan.</p>
+                </div>
+                </div>
+
+                <div class="card" style="width: 18rem;">
+                <img src="img/bakedsalmon.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Baked Salmon with Asparagus</h5>
+                    <p class="card-text">Oven-baked salmon served with tender asparagus for a balanced flavorful dinner.</p>
+                </div>
+            </div>
+
+            <div class="card" style="width: 18rem;">
+                <img src="img/grilledsalad.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Grilled Chicken Caesar Salad</h5>
+                    <p class="card-text">Fresh romaine topped with grilled chicken, parmesan, and classic Caesar dressing.</p>
+                </div>
+                </div>
+
+
+            </div>
+            </div>
+
+
+            <div class="carousel-item">
+                <div class="d-flex gap-3 justify-content-center">
+                <div class="card" style="width: 18rem;">
+                <img src="img/breakfastburrito.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Breakfast Burrito with Salsa</h5>
+                    <p class="card-text">A warm tortilla filled with eggs and savory fillings, served with salsa.</p>
+                </div>
+                </div>
+
+                <div class="card" style="width: 18rem;">
+                <img src="img/lentilcurry.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Lentil Curry with Rice</h5>
+                    <p class="card-text">Hearty lentils simmered in curry spices and served over fluffy rice.</p>
+                </div>
+                </div>
+
+                <div class="card" style="width: 18rem;">
+                <img src="img/wrap.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Turkey and Swiss Cheese Wrap</h5>
+                    <p class="card-text">Sliced turkey and Swiss cheese wrapped with fresh veggies in a soft tortilla.</p>
+                </div>
+                </div>
+
+                <div class="card" style="width: 18rem;">
+                <img src="img/shrimpscampi.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Shrimp Scampi over Linguine</h5>
+                    <p class="card-text">Tender shrimp sautéed in garlic butter served over linguine pasta.</p>
+                </div>
+                </div>
+
+
+            </div>
+            </div>
+           
+           
+        <button class="carousel-control-prev" type="button" data-bs-target="#mealCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#mealCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+    
+</div>
+
+<hr class="mb-3"/>
+
+<h2 class="text-center mb-3">Have A Meal Idea You'd Like To Share?</h2>
+<h4 class="text-center mb-3">Let our chefs curate the perfect dish to complement your weekly meal plan!</h4>
+
+    <form method="post">
+        <div class="mb-3">
+            <label asp-for="IdeaName" class="form-label"></label>
+            <input asp-for="IdeaName" class="form-control" />
+            <span asp-validation-for="IdeaName" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="IdeaDescription" class="form-label"></label>
+            <textarea asp-for="IdeaDescription" class="form-control"></textarea>
+            <span asp-validation-for="IdeaDescription" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
