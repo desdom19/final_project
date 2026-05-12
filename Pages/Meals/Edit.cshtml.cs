@@ -67,8 +67,7 @@ namespace final_project.Pages_Meals
                 mealToUpdate.MealName = Meal.MealName;
                 mealToUpdate.TimeCategory = Meal.TimeCategory;
                 mealToUpdate.PreparationTime = Meal.PreparationTime;
-                mealToUpdate.TotalCalories = Meal.TotalCalories;
-                mealToUpdate.TotalCost = Meal.TotalCost;
+               
                 
             }
 

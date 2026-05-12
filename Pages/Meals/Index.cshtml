@@ -71,7 +71,7 @@
                         caloriesSort = "calories_desc";
                     }
                 }
-                <a asp-page="./Index" asp-route-CurrentSort="@caloriesSort" asp-route-PageNum="@Model.PageNum" asp-route-CurrentSearch="@Model.CurrentSearch">@Html.DisplayNameFor(model => model.Meal[0].TotalCalories)</a>
+                <a asp-page="./Index" asp-route-CurrentSort="@caloriesSort" asp-route-PageNum="@Model.PageNum" asp-route-CurrentSearch="@Model.CurrentSearch">Total Calories</a>
             </th>
             <th>
                  @{
@@ -80,7 +80,7 @@
                         costSort = "cost_desc";
                     }
                 }
-                <a asp-page="./Index" asp-route-CurrentSort="@costSort" asp-route-PageNum="@Model.PageNum" asp-route-CurrentSearch="@Model.CurrentSearch">@Html.DisplayNameFor(model => model.Meal[0].TotalCost)</a>
+                <a asp-page="./Index" asp-route-CurrentSort="@costSort" asp-route-PageNum="@Model.PageNum" asp-route-CurrentSearch="@Model.CurrentSearch">Total Cost</a>
             </th>
                
             <th>
@@ -102,10 +102,10 @@
                 @Html.DisplayFor(modelItem => item.PreparationTime)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.TotalCalories)
+                @(item.MealIngredients!.Sum(mi => mi.Quantity * mi.Ingredient.IngredientCalories))
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.TotalCost)
+                @(item.MealIngredients!.Sum(mi => mi.Quantity * mi.Ingredient.IngredientCost).ToString("C"))
             </td>
             <td>
                 @foreach(var ingredient in item.MealIngredients!){

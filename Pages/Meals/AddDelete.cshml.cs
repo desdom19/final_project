@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using final_project.Models;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore.Migrations.Internal;
+using System.Numerics;
 
 namespace final_project.Pages_Meals
 {
@@ -42,6 +44,8 @@ namespace final_project.Pages_Meals
         public int IngredientIDToDelete {get;set;}
         public SelectList IngredientsDropDown {get;set;} = default!;
 
+        
+
 
 
 
@@ -59,6 +63,8 @@ namespace final_project.Pages_Meals
                 Meal = meal;
 
                 IngredientsDropDown = new SelectList(_context.Ingredients.ToList(),"IngredientID", "IngredientName" );
+
+              
 
                 return Page();
             }
@@ -110,6 +116,12 @@ namespace final_project.Pages_Meals
                 {
                 _context.Add(ingredientToAdd);
                 _context.SaveChanges();
+
+               
+
+
+
+                
                 }
 
                 
@@ -120,7 +132,7 @@ namespace final_project.Pages_Meals
                 
             }
 
-            return Page();
+             return RedirectToPage(new {id = id});
         }
 
         //Database removal code

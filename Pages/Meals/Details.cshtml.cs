@@ -23,21 +23,14 @@ namespace final_project.Pages_Meals
         }
 
         public Meal Meal { get; set; } = default!;
-        // Addition
-        [BindProperty]
-        [Display(Name = "Add Ingredient")]
-        [Required(ErrorMessage = "Invalid Ingredient")]
-        public int IngredientIDToAdd {get;set;}
 
-        [BindProperty]
-        public decimal AddedIngredientQuantity {get;set;}
 
-    
+        [Display(Name = "Total Calories")]
+        public decimal CaloriesTotal {get;set;}
+      
+        public decimal CostTotal {get;set;}
 
-        // Deletion
-        [BindProperty]
-        public int IngredientIDToDelete {get;set;}
-        public SelectList IngredientsDropDown {get;set;} = default!;
+        
         
 
 
@@ -64,102 +57,16 @@ namespace final_project.Pages_Meals
             {
                 Meal = meal;
 
-                IngredientsDropDown = new SelectList(_context.Ingredients.ToList(),"IngredientID", "IngredientName" );
+                CaloriesTotal = Meal.MealIngredients!.Sum(mi => mi.Quantity * mi.Ingredient.IngredientCalories);
+
+                CostTotal = Meal.MealIngredients!.Sum(mi => mi.Quantity * mi.Ingredient.IngredientCost);
+
+        
 
                 return Page();
             }
 
             return NotFound();
-        }
-
-
-        public IActionResult OnPostAddIngredient(int? id)
-        {
-            _logger.LogWarning($"Add Ingredient: MealID {id}, ADD ingredient {IngredientIDToAdd}");
-
-
-            if(id == null)
-            {
-                return NotFound();
-            }
-
-            var meal = _context.Meals.Include(m => m.MealIngredients!).ThenInclude(mi => mi.Ingredient).FirstOrDefault(m => m.MealID == id);
-
-            if (meal == null)
-            {
-                return NotFound();
-            }
-
-            else
-            {
-                Meal = meal;
-            }
-
-            IngredientsDropDown = new SelectList(_context.Ingredients.ToList(), "IngredientID", "IngredientName");
-
-            if (!ModelState.IsValid)
-            {
-                _logger.LogWarning($"Model State is INVALID");
-                return Page();
-            }
-
-           
-
-            if (!_context.MealIngredients.Any(mi => mi.IngredientID == IngredientIDToAdd && mi.MealID == id))
-            {
-                MealIngredient ingredientToAdd = new MealIngredient {MealID = id.Value, IngredientID = IngredientIDToAdd, Quantity = AddedIngredientQuantity};
-               
-                _context.Add(ingredientToAdd);
-                _context.SaveChanges();
-                
-
-                
-            } 
-            else
-            {
-                _logger.LogWarning("Ingredient already utilized in meal");
-                
-            }
-
-            return Page();
-        }
-
-        //Database removal code
-
-        public IActionResult OnPostRemoveIngredient(int? id)
-        {
-            _logger.LogWarning($"Remove Ingredient: MealID {id}, REMOVE ingredient {IngredientIDToDelete}");
-
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var meal = _context.Meals.Include(m => m.MealIngredients!).ThenInclude(mi => mi.Ingredient).FirstOrDefault(m => m.MealID == id);
-
-            if (meal == null)
-            {
-                return NotFound();
-            }
-            else
-            {
-                Meal = meal;
-            }
-            IngredientsDropDown = new SelectList(_context.Ingredients.ToList(), "IngredientID", "IngredientName");
-
-            var ingredientToDrop = _context.MealIngredients.Find(IngredientIDToDelete, id);
-
-            if (ingredientToDrop != null)
-            {
-                _context.Remove(ingredientToDrop);
-                _context.SaveChanges();
-            }
-            else
-            {
-                _logger.LogWarning("Ingredient NOT utilized in meal");
-            }
-
-            return RedirectToPage(new {id = id});
         }
 
 

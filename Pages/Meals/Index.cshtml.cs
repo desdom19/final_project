@@ -32,11 +32,16 @@ namespace final_project.Pages_Meals
         [BindProperty(SupportsGet = true)]
         public string CurrentSearch {get;set;} = string.Empty;
 
+        public decimal CaloriesTotal {get;set;}
+      
+        public decimal CostTotal {get;set;}
+
         
 
         public async Task OnGetAsync()
         {
-            var query = _context.Meals.Include(m => m.MealIngredients!).ThenInclude(mi => mi.Ingredient).Select(m => m);
+
+          var query = _context.Meals.Include(m => m.MealIngredients!).ThenInclude(mi => mi.Ingredient).Select(m => m);
 
             // Search
             if (!string.IsNullOrEmpty(CurrentSearch))
@@ -61,18 +66,21 @@ namespace final_project.Pages_Meals
                     break;
 
                     case "calories_asc":
-                        query = query.OrderBy(m => m.TotalCalories);
+                        query = query.OrderBy(m => m.MealIngredients!.Sum(mi => mi.Quantity * mi.Ingredient.IngredientCalories));
                     break;
                     case "calories_desc":
-                        query = query.OrderByDescending(m => m.TotalCalories);
+                        query = query.OrderByDescending(m => m.MealIngredients!.Sum(mi => mi.Quantity * mi.Ingredient.IngredientCalories));
                     break;
 
                     case "cost_asc":
-                        query = query.OrderBy(m => m.TotalCost);
+                        query = query.OrderBy(m => m.MealIngredients!.Sum(mi => mi.Quantity * mi.Ingredient.IngredientCost));
                     break;
                     case "cost_desc":
-                        query = query.OrderByDescending(m => m.TotalCost);
+                        query = query.OrderByDescending(m => m.MealIngredients!.Sum(mi => mi.Quantity * mi.Ingredient.IngredientCost));
                     break;
+
+
+            
 
 
 

@@ -21,6 +21,11 @@ namespace final_project.Pages_Meals
         [BindProperty]
         public Meal Meal { get; set; } = default!;
 
+        public decimal CaloriesTotal {get;set;}
+      
+        public decimal CostTotal {get;set;}
+
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
@@ -33,6 +38,10 @@ namespace final_project.Pages_Meals
             if (meal is not null)
             {
                 Meal = meal;
+
+                CaloriesTotal = Meal.MealIngredients!.Sum(mi => mi.Quantity * mi.Ingredient.IngredientCalories);
+
+                CostTotal = Meal.MealIngredients!.Sum(mi => mi.Quantity * mi.Ingredient.IngredientCost);
 
                 return Page();
             }

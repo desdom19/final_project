@@ -30,17 +30,17 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Meal.PreparationTime)
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Meal.TotalCalories)
-        </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Meal.TotalCalories)
+            Total Calories
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Meal.TotalCost)
-        </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Meal.TotalCost)
+            @Model.CaloriesTotal
+        </dd>
+        <dd class="col-sm-10">
+            Total Cost
+        </dd>
+        <dd class="col-sm-10">
+            @Model.CostTotal.ToString("C")
         </dd>
     </dl>
     
