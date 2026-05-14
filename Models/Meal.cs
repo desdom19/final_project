@@ -20,16 +20,6 @@ public class Meal
     [Range(1,90)]
     public int PreparationTime {get;set;}
 
-    [Required]
-    [Range(0.01,1200)]
-    [Display(Name = "Total Calories")]
-    public decimal TotalCalories {get;set;}
-
-    [Required]
-    [Range(0.01,500)]
-    [Display(Name = "Total Cost")]
-    public decimal TotalCost {get;set;}
-
     [Display(Name = "Meal Ingredients")]
     public List<MealIngredient>? MealIngredients {get;set;} = default!; // Navigation property
 }

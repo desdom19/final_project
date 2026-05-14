@@ -36,8 +36,6 @@ namespace final_project.Pages_Meals
       
         public decimal CostTotal {get;set;}
 
-        
-
         public async Task OnGetAsync()
         {
 
@@ -78,14 +76,7 @@ namespace final_project.Pages_Meals
                     case "cost_desc":
                         query = query.OrderByDescending(m => m.MealIngredients!.Sum(mi => mi.Quantity * mi.Ingredient.IngredientCost));
                     break;
-
-
-            
-
-
-
             }
-
             //Pagination
 
             TotalPages = (int)Math.Ceiling(query.Count()/(double)PageSize);

@@ -73,12 +73,6 @@ namespace final_project.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<decimal>("TotalCalories")
-                        .HasColumnType("TEXT");
-
-                    b.Property<decimal>("TotalCost")
-                        .HasColumnType("TEXT");
-
                     b.HasKey("MealID");
 
                     b.ToTable("Meals");

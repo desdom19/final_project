@@ -9,13 +9,8 @@
 
 
 
-
-
 <h1>Meal Library</h1>
 
-<p>
-    <a asp-page="Create">Create New Meal</a>
-</p>
 
 <div class="row mb-4">
     <form class="d-flex" role="search" asp-page="./Index" method="get">
@@ -26,16 +21,8 @@
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </div>
         </div>
-    
     </form>
-    
-    </div>
-
-   
-
-    
-
-
+</div>
 
 
 <table class="table">
@@ -61,7 +48,6 @@
                         minutesSort = "minutes_desc";
                     }
                 }
-
                 <a asp-page="./Index" asp-route-CurrentSort="@minutesSort" asp-route-PageNum="@Model.PageNum" asp-route-CurrentSearch="@Model.CurrentSearch">@Html.DisplayNameFor(model => model.Meal[0].PreparationTime)</a>
             </th>
             <th>
@@ -82,15 +68,17 @@
                 }
                 <a asp-page="./Index" asp-route-CurrentSort="@costSort" asp-route-PageNum="@Model.PageNum" asp-route-CurrentSearch="@Model.CurrentSearch">Total Cost</a>
             </th>
-               
             <th>
                 @Html.DisplayNameFor(model => model.Meal[0].MealIngredients)
             </th>
-            <th></th>
+            <th>
+                Actions
+            </th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Meal) {
+
+    @foreach (var item in Model.Meal){
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.MealName)
@@ -112,9 +100,9 @@
 
                     @ingredient.Ingredient.IngredientName <br />
 
-
                 }
             </td>
+
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.MealID">Edit Existing Meal</a> |
                 <a asp-page="./Details" asp-route-id="@item.MealID">View Details</a> |
@@ -122,9 +110,10 @@
                 <a asp-page="./Delete" asp-route-id="@item.MealID">Delete Meal</a>
             </td>
         </tr>
-}
+    }
     </tbody>
 </table>
+
 
 <hr/>
 @{

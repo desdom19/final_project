@@ -37,9 +37,7 @@ namespace final_project.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     MealName = table.Column<string>(type: "TEXT", maxLength: 60, nullable: false),
                     TimeCategory = table.Column<string>(type: "TEXT", nullable: false),
-                    PreparationTime = table.Column<int>(type: "INTEGER", nullable: false),
-                    TotalCalories = table.Column<decimal>(type: "TEXT", nullable: false),
-                    TotalCost = table.Column<decimal>(type: "TEXT", nullable: false)
+                    PreparationTime = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {

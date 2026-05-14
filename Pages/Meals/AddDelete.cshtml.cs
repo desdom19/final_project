@@ -27,27 +27,24 @@ namespace final_project.Pages_Meals
 
          public Meal Meal { get; set; } = default!;
 
-        // Addition
+        
         [BindProperty]
         [Display(Name = "Add Ingredient")]
-        [Required(ErrorMessage = "Invalid Ingredient")]
+        [Required(ErrorMessage = "Must select at least one ingredient")]
         public int IngredientIDToAdd {get;set;}
 
 
-         [BindProperty]
+        [BindProperty]
         [Range(0.01,999.99)]
         [Required(ErrorMessage = "Invalid Quantity")]
         public decimal AddedIngredientQuantity {get;set;}
 
-        // Deletion
+       
         [BindProperty]
         public int IngredientIDToDelete {get;set;}
         public SelectList IngredientsDropDown {get;set;} = default!;
 
-        
-
-
-
+        public List<Ingredient>? AllIngredients {get;set;}
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -64,7 +61,7 @@ namespace final_project.Pages_Meals
 
                 IngredientsDropDown = new SelectList(_context.Ingredients.ToList(),"IngredientID", "IngredientName" );
 
-              
+                AllIngredients = await _context.Ingredients.ToListAsync();
 
                 return Page();
             }
@@ -72,6 +69,7 @@ namespace final_project.Pages_Meals
             return NotFound();
         }
 
+        //Database addition 
           public IActionResult OnPostAddIngredient(int? id)
         {
             _logger.LogWarning($"Add Ingredient: MealID {id}, ADD ingredient {IngredientIDToAdd}");
@@ -102,8 +100,6 @@ namespace final_project.Pages_Meals
                 return Page();
             }
 
-           
-
             if (!_context.MealIngredients.Any(mi => mi.IngredientID == IngredientIDToAdd && mi.MealID == id))
             {
                 MealIngredient ingredientToAdd = new MealIngredient {MealID = id.Value, IngredientID = IngredientIDToAdd, Quantity = AddedIngredientQuantity};
@@ -117,14 +113,8 @@ namespace final_project.Pages_Meals
                 _context.Add(ingredientToAdd);
                 _context.SaveChanges();
 
-               
-
-
-
-                
                 }
-
-                
+  
             } 
             else
             {
@@ -135,7 +125,7 @@ namespace final_project.Pages_Meals
              return RedirectToPage(new {id = id});
         }
 
-        //Database removal code
+        //Database removal 
 
         public IActionResult OnPostRemoveIngredient(int? id)
         {
@@ -173,23 +163,42 @@ namespace final_project.Pages_Meals
             return RedirectToPage(new {id = id});
         }
 
+        //Allows user exit if ingredient validation is satisfied
 
-       
+        public IActionResult OnPostDoneCreating(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
+            var meal = _context.Meals.Include(m => m.MealIngredients!).ThenInclude(mi => mi.Ingredient).FirstOrDefault(m => m.MealID == id);
 
+            if (meal == null)
+            {
+                return NotFound();
+            }
 
+            if (meal.MealIngredients == null || meal.MealIngredients.Count == 0)
+            {
+                _logger.LogWarning("Meal must have at least one ingredient");
 
+                Meal = meal;
+           
+
+            IngredientsDropDown = new SelectList(_context.Ingredients.ToList(), "IngredientID", "IngredientName");
+
+            AllIngredients = _context.Ingredients.ToList();
+
+            return Page();
+            }
+
+            return RedirectToPage("./Index");
+        }
+
+        
 
     }
-
-
-
-    
-
-
-
-
-
 
 }
 

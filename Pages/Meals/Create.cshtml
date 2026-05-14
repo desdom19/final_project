@@ -13,22 +13,27 @@
     <div class="col-md-4">
     <form method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
             <div class="form-group">
                 <label asp-for="Meal.MealName" class="control-label"></label>
                 <input asp-for="Meal.MealName" class="form-control" />
                 <span asp-validation-for="Meal.MealName" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Meal.TimeCategory" class="control-label"></label>
                 <input asp-for="Meal.TimeCategory" class="form-control" />
                 <span asp-validation-for="Meal.TimeCategory" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <span class="text-danger">*</span>
                 <label asp-for="Meal.PreparationTime" class="control-label"></label>
                 <input asp-for="Meal.PreparationTime" class="form-control" aria-required="true"/>
                 <span asp-validation-for="Meal.PreparationTime" class="text-danger"></span>
             </div>
+
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -37,7 +42,7 @@
 </div>
 
 <div>
-    <a asp-page="Index">Back to List</a>
+    <a asp-page="Index">Cancel</a>
 </div>
 
 @section Scripts {

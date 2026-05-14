@@ -33,21 +33,34 @@ namespace final_project.Pages_Meals
                 return NotFound();
             }
 
-            var meal = await _context.Meals.FirstOrDefaultAsync(m => m.MealID == id);
+            var meal = await _context.Meals.Include(m => m.MealIngredients!).ThenInclude(mi => mi.Ingredient).FirstOrDefaultAsync(m => m.MealID == id);
 
-            if (meal is not null)
+            if (meal == null)
             {
-                Meal = meal;
-
-                CaloriesTotal = Meal.MealIngredients!.Sum(mi => mi.Quantity * mi.Ingredient.IngredientCalories);
-
-                CostTotal = Meal.MealIngredients!.Sum(mi => mi.Quantity * mi.Ingredient.IngredientCost);
-
-                return Page();
+                return NotFound();
             }
 
-            return NotFound();
-        }
+            Meal = meal;
+
+            if (Meal.MealIngredients == null)
+            {
+                CaloriesTotal = 0;
+                CostTotal = 0;
+            }
+            
+                CaloriesTotal = Meal.MealIngredients?.Sum(mi => mi.Quantity * mi.Ingredient.IngredientCalories) ?? 0;
+
+                CostTotal = Meal.MealIngredients?.Sum(mi => mi.Quantity * mi.Ingredient.IngredientCost) ?? 0;
+                
+    
+
+               
+                return Page();
+                
+            }
+
+            
+        
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {

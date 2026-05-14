@@ -67,11 +67,8 @@ namespace final_project.Pages_Meals
                 mealToUpdate.MealName = Meal.MealName;
                 mealToUpdate.TimeCategory = Meal.TimeCategory;
                 mealToUpdate.PreparationTime = Meal.PreparationTime;
-               
                 
             }
-
-           // _context.Attach(Meal).State = EntityState.Modified;
 
             try
             {
@@ -139,9 +136,6 @@ namespace final_project.Pages_Meals
             }
             return Page();
         }
-
-
-
         
     }
 }

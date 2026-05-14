@@ -42,13 +42,9 @@
         <dd class="col-sm-10">
             @Model.CostTotal.ToString("C")
         </dd>
-
-
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Meal.MealIngredients)
         </dt>
-
-
 
         <dd class ="col-sm-10">
             <dl class="row">
@@ -80,7 +76,7 @@
 
                 <dd class="col-sm-8">
                     @Html.DisplayNameFor(model => ingredient.Ingredient.IngredientCost):
-                    @Html.DisplayFor(model => ingredient.Ingredient.IngredientCost)
+                    @ingredient.Ingredient.IngredientCost.ToString("C")
                 </dd> 
 
                 <dd class="col-sm-8">
@@ -92,20 +88,11 @@
                     @Html.DisplayNameFor(model => ingredient.Ingredient.UnitMeasurement):
                     @Html.DisplayFor(model => ingredient.Ingredient.UnitMeasurement)
                 </dd> 
-
-                
-
-                </dl>           
-}
-
-</dl>
-            
-
-
-       
+            </dl>           
+            }
+            </dl>
     </dl>
 </div>
-
 
 <div>
     <a asp-page="./Edit" asp-route-id="@Model.Meal.MealID">Edit</a> |

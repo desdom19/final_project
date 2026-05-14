@@ -30,20 +30,6 @@ namespace final_project.Pages_Meals
       
         public decimal CostTotal {get;set;}
 
-        
-        
-
-
-        
-
-   
-
-    
-
-    
-
-
-
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
@@ -57,11 +43,9 @@ namespace final_project.Pages_Meals
             {
                 Meal = meal;
 
-                CaloriesTotal = Meal.MealIngredients!.Sum(mi => mi.Quantity * mi.Ingredient.IngredientCalories);
+                CaloriesTotal = Meal.MealIngredients?.Sum(mi => mi.Quantity * mi.Ingredient.IngredientCalories) ?? 0;
 
-                CostTotal = Meal.MealIngredients!.Sum(mi => mi.Quantity * mi.Ingredient.IngredientCost);
-
-        
+                CostTotal = Meal.MealIngredients?.Sum(mi => mi.Quantity * mi.Ingredient.IngredientCost) ?? 0;
 
                 return Page();
             }
@@ -69,22 +53,6 @@ namespace final_project.Pages_Meals
             return NotFound();
         }
 
-
-       
-
-
-
-
-
     }
-
-
-
-    
-
-
-
-
-
 
 }

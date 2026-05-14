@@ -10,7 +10,7 @@ using final_project.Models;
 namespace final_project.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260506175224_InitialCreate")]
+    [Migration("20260512162219_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -74,12 +74,6 @@ namespace final_project.Migrations
 
                     b.Property<string>("TimeCategory")
                         .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<decimal>("TotalCalories")
-                        .HasColumnType("TEXT");
-
-                    b.Property<decimal>("TotalCost")
                         .HasColumnType("TEXT");
 
                     b.HasKey("MealID");
